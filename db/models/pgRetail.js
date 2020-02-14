@@ -1,12 +1,12 @@
 const Pool = require("pg").Pool;
 const schemaName = "product";
-const postgresRole = "objectrocket";
+const postgresRole = "";
 var pgSchemas = [];
 
 const pool = new Pool({
   user: postgresRole,
   host: "localhost",
-  database: "products",
+  database: "pgproducts",
   password: "1234",
   port: "3000"
 });
@@ -40,7 +40,7 @@ async function schemaFuncs() {
   let createSql = `CREATE SCHEMA IF NOT EXISTS
 ${schemaName} AUTHORIZATION ${postgresRole};`;
 
-  console.log("\ncreateSql:", createSql);
+  console.log("createSql:", createSql);
   await pool.query(createSql, (createErr, createRes) => {
     if (createErr) {
       console.log(
@@ -57,8 +57,7 @@ ${schemaName} AUTHORIZATION ${postgresRole};`;
       console.log("CREATE SCHEMA RESULT:", createRes.command);
 
       let createProdTable = `CREATE TABLE ${schemaName}.prod(
-        product_id INT PRIMARY KEY,
-        id INT,
+        id INT PRIMARY KEY,
         product_name VARCHAR,
         slogan VARCHAR,
         product_description VARCHAR,
@@ -70,16 +69,32 @@ ${schemaName} AUTHORIZATION ${postgresRole};`;
 
       let createStyleTable = `CREATE TABLE ${schemaName}.style(
         product_id INT REFERENCES prod PRIMARY KEY,
-        style_id VARCHAR,
+        style_id INT PRIMARY KEY,
         product_name VARCHAR,
         sale_price VARCHAR,
         default VARCHAR,
+        );`;
+
+      let createSkusTable = `CREATE TABLE ${schemaName}.skus(
+        id INT PRIMARY KEY
+        STYLE_ID REFERENCES style PRIMARY KEY
+        x INT,
+        xs INT,
+        m INT,
+        l INT,
+        xl INT,
+        xxl INT
+      )`
+      let createPhotoTable = `CREATE TABLE ${schemaName}.photo(
+        ID INT PRIMARY KEY
+        STYLE_ID INT REFERENCES style PRIMARY KEY
         thumbnail_url TEXT,
         photo_url TEXT,
-      );`;
+      )`
 
       console.log("createProdTable:", createProdTable);
       console.log("createStyleTable:", createStyleTable);
+      console.log("createStyleTable:", createPhotoTable);
 
       pool.query(createProdTable, (tableErr, tableRes) => {
         if (tableErr) {

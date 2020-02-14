@@ -20,22 +20,25 @@ var skusSchema = mongoose.Schema({
 			XXL: Number
 })
 
+var styleSchema = mongoose.Schema({
+  style_id: {type: String, unique: true},
+  name: String,
+  original_price: String,
+  sale_price: String,
+  default: Number,
+  photos: [photosSchema  ],
+})
+
 var productSchema = mongoose.Schema({
   id: Number,
-  name: String,
   product_id: { type: String, unique: true },
   slogan: String,
   product_description: String,
   category: String,
   default_price: String,
   features: [featuresSchema],
-  style_id: {type: String, unique: true},
   skus: skusSchema,
-  original_price: String,
-  sale_price: String,
-  default: Number,
-  photos: [photosSchema  ],
-
+  style: styleSchema
 });
 
 var ProductModel = mongoose.model('product', productSchema);
