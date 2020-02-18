@@ -43,31 +43,10 @@ var productSchema = mongoose.Schema({
 
 var ProductModel = mongoose.model('product', productSchema);
 
-function findAll(callback) {
-  ProductModel.find({}, callback);
-}
 
 
-function findOne(id, callback) {
-  ProductModel.find({id: id}, callback);
-}
 
-function insertOne(product, callback) {
-  ProductModel.create(product, callback);
-}
-
-function findMany(ids, callback) {
-  ProductModel.find({id: {$in: ids}}, callback);
-}
-
-function count(){
-  return ProductModel.count();
-}
 
 exports.ProductModel = ProductModel;
-exports.findOne = findOne;
-exports.findAll = findAll;
-exports.insertOne = insertOne;
-exports.findMany = findMany;
-exports.count = count;
+
 

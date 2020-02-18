@@ -1,6 +1,6 @@
 const MongoClient = require('mongodb').MongoClient;
 const mongoose = require('mongoose')
-const url = 'mongodb://localhost:27017';
+const uri = 'mongodb://localhost:27017';
 
 const options = {
   useNewUrlParser: true
@@ -46,10 +46,60 @@ function deleteAllProducts() {
   });
 }
 
+function findAll(callback) {
+  ProductModel.find({}, callback);
+}
 
+
+function findOne(id, callback) {
+  ProductModel.find({id: id}, callback);
+}
+
+function insertOne(product, callback) {
+  ProductModel.create(product, callback);
+}
+
+function findMany(ids, callback) {
+  ProductModel.find({id: {$in: ids}}, callback);
+}
+
+function count(){
+  return ProductModel.count();
+}
+
+function addToDB(product){
+  console.log('in the add function');
+  return Product.updateOne({ "id": product.id }, product, { upsert: true })
+    // .save()
+    .then(prod => {
+      // console.log('added:', JSON.stringify(prod))
+      console.log("id is:", product.id)
+      console.log(prod)
+      return prod;
+    })
+    .catch(err => console.log('Error:', err))
+}
+
+function add(product) {
+  return Product.updateOne({ "id": `${product.id}` }, product, { upsert: true })
+    .then(prod => {
+      console.log(product.id);
+      console.log(prod)
+      return prod;
+    })
+    .catch(err => {
+      console.log('Error:', err)
+    })
+}
 
 module.exports = {
-  getOne,
   dataLoader,
   deleteAllProducts,
+  add,
+  addToDB,
+  findOne,
+  findAll,
+  insertOne,
+  findMany,
+  count
 };
