@@ -43,7 +43,7 @@ function indexDB() {
 
     let db = client.db('clothes');
     async function indexMe() {
-      await db.collection("clothes").createIndex({product_id: 1});
+      await db.collection("clothes").createIndex({id: 1});
       client.close();
     }
 

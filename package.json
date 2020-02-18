@@ -7,7 +7,7 @@
     "react-dev": "webpack -d --watch",
     "test": "jest",
     "db": "node ./db/populateDB.js",
-    "start": "nodemon ./server/index.js"
+    "start": "nodemon ./server/pindex.js"
   },
   "repository": {
     "type": "git",
@@ -28,9 +28,12 @@
     "csv-writer": "^1.6.0",
     "express": "^4.17.1",
     "faker": "^4.1.0",
+    "fast-csv": "^4.1.0",
+    "fs": "0.0.1-security",
     "jest": "^25.1.0",
     "mongoose": "^5.8.12",
     "morgan": "^1.9.1",
+    "newrelic": "^6.4.0",
     "nodemon": "^2.0.2",
     "os": "^0.1.1",
     "pg": "^7.18.1",

@@ -1,19 +1,21 @@
 const Pool = require("pg").Pool;
-const schemaName = "product";
-const postgresRole = "";
+
+
+const schemaName = "products";
+const postgresRole = "postgres";
 var pgSchemas = [];
 
 const pool = new Pool({
   user: postgresRole,
   host: "localhost",
   database: "pgproducts",
-  password: "1234",
-  port: "3000"
+  password: "postgres",
+  port: "5432"
 });
 
 const schemaCodes = {
   "25007": "schema_and_data_statement_mixing_not_supported",
-  "3F000": "invalid_schema_name",
+  "3F000": "invalid_products",
   "42P06": "duplicate_schema",
   "42P15": "invalid_schema_definition",
   "42000": "syntax_error_or_access_rule_violation",
@@ -21,19 +23,19 @@ const schemaCodes = {
 };
 
 async function schemaFuncs() {
-  let selectSchemasSql = "SELECT schema_name FROM information_schema.schemata;";
+  let selectSchemasSql = "SELECT * FROM pgproducts.schemata;";
   await pool.query(selectSchemasSql, (err, res) => {
-    console.log("selectSchemasSql:", selectSchemasSql);
+    console.log("\nselectSchemasSql:", selectSchemasSql);
 
     if (err) {
-      console.log("SELECT schema_name:", schemaCodes[err.code]);
+      console.log("SELECT products:", schemaCodes[err.code]);
       console.log("ERROR code:", err.code);
     } else if (res.rows !== undefined) {
       res.rows.forEach(row => {
-        pgSchemas.push(row.schema_name);
+        pgSchemas.push(row.products);
       });
       console.log("schema names:", pgSchemas);
-      console.log("SELECT schema_name total schemas:", res.rowCount);
+      console.log("SELECT products total schemas:", res.rowCount);
     }
   });
 
@@ -54,7 +56,7 @@ ${schemaName} AUTHORIZATION ${postgresRole};`;
     }
 
     if (createRes) {
-      console.log("CREATE SCHEMA RESULT:", createRes.command);
+      console.log("\nCREATE SCHEMA RESULT:", createRes.command);
 
       let createProdTable = `CREATE TABLE ${schemaName}.prod(
         id INT PRIMARY KEY,
@@ -63,8 +65,6 @@ ${schemaName} AUTHORIZATION ${postgresRole};`;
         product_description VARCHAR,
         category VARCHAR,
         default_price VARCHAR,
-        feature VARCHAR,
-        val VARCHAR
       );`;
 
       let createStyleTable = `CREATE TABLE ${schemaName}.style(
@@ -76,8 +76,8 @@ ${schemaName} AUTHORIZATION ${postgresRole};`;
         );`;
 
       let createSkusTable = `CREATE TABLE ${schemaName}.skus(
-        id INT PRIMARY KEY
-        STYLE_ID REFERENCES style PRIMARY KEY
+        id INT PRIMARY KEY,
+        style_id REFERENCES style PRIMARY KEY,
         x INT,
         xs INT,
         m INT,
@@ -85,16 +85,25 @@ ${schemaName} AUTHORIZATION ${postgresRole};`;
         xl INT,
         xxl INT
       )`
+
+      let createFeaturesTable = `CREATE TABLE ${schemaName}.features(
+        id INT PRIMARY KEY,
+        style_id REFERENCES style PRIMARY KEY,
+        feature VARCHAR,
+        value VARCHAR
+      )`
       let createPhotoTable = `CREATE TABLE ${schemaName}.photo(
-        ID INT PRIMARY KEY
-        STYLE_ID INT REFERENCES style PRIMARY KEY
-        thumbnail_url TEXT,
-        photo_url TEXT,
+        ID INT PRIMARY KEY,
+        style_id INT REFERENCES style PRIMARY KEY,
+        thumbnail_url VARCHAR,
+        photo_url VARCHAR,
       )`
 
-      console.log("createProdTable:", createProdTable);
-      console.log("createStyleTable:", createStyleTable);
-      console.log("createStyleTable:", createPhotoTable);
+      console.log("\ncreateProdTable:", createProdTable);
+      console.log("\ncreateStyleTable:", createStyleTable);
+      console.log("\ncreateSkusTable:", createSkusTable);
+      console.log("\ncreateFeaturesTable:", createFeaturesTable);
+      console.log("\ncreatePhotosTable:", createPhotoTable);
 
       pool.query(createProdTable, (tableErr, tableRes) => {
         if (tableErr) {
@@ -108,7 +117,7 @@ ${schemaName} AUTHORIZATION ${postgresRole};`;
         }
 
         if (tableRes) {
-          console.log("CREATE TABLE RESULT:", tableRes);
+          console.log("\nCREATE TABLE RESULT:", tableRes);
         }
       });
       pool.query(createStyleTable, (tableErr, tableRes) => {
@@ -123,7 +132,52 @@ ${schemaName} AUTHORIZATION ${postgresRole};`;
         }
 
         if (tableRes) {
-          console.log("CREATE TABLE RESULT:", tableRes);
+          console.log("\nCREATE TABLE RESULT:", tableRes);
+        }
+      });
+      pool.query(createSkusTable, (tableErr, tableRes) => {
+        if (tableErr) {
+          console.log(
+            "CREATE TABLE ERROR:",
+            tableErr.code,
+            "--",
+            schemaCodes[tableErr.code]
+          );
+          console.log("createSkusTable:", tableErr);
+        }
+
+        if (tableRes) {
+          console.log("\nCREATE TABLE RESULT:", tableRes);
+        }
+      });
+      pool.query(createFeaturesTable, (tableErr, tableRes) => {
+        if (tableErr) {
+          console.log(
+            "CREATE TABLE ERROR:",
+            tableErr.code,
+            "--",
+            schemaCodes[tableErr.code]
+          );
+          console.log("createFeaturesTable:", tableErr);
+        }
+
+        if (tableRes) {
+          console.log("\nCREATE TABLE RESULT:", tableRes);
+        }
+      });
+      pool.query(createPhotosTable, (tableErr, tableRes) => {
+        if (tableErr) {
+          console.log(
+            "CREATE TABLE ERROR:",
+            tableErr.code,
+            "--",
+            schemaCodes[tableErr.code]
+          );
+          console.log("createPhotosTable:", tableErr);
+        }
+
+        if (tableRes) {
+          console.log("\nCREATE TABLE RESULT:", tableRes);
         }
       });
     }
@@ -131,3 +185,29 @@ ${schemaName} AUTHORIZATION ${postgresRole};`;
 }
 
 schemaFuncs();
+
+
+
+const getSome = () => {
+  return pool.query('SELECT * FROM prod LIMIT 100')
+    .then(res => res.rows)
+    .catch(e => console.error(e.stack))
+}
+
+const get = (id)  => {
+  console.log(id)
+  return pool.query(`SELECT * FROM prod WHERE id = '${id}'`)
+    .then(res => res.rows[0])
+    .catch(e => console.error(e.stack))
+}
+
+const add = (product) => {
+  return pool.query(`INSERT INTO pgproducts.prod(, "product_name", "slogan", "product_description", "category", "default_price")
+  VALUES (${product.id}, ${product.product_name}, ${product.slogan}, ${product.product_description}, ${product.category}, ${product.default_price});`
+    .then(res => res)
+    .catch(e => console.log('Error inserting:', e))
+  )}
+
+module.exports = { getSome, add, get }
+
+// , array['${JSON.stringify(product.imgDimensions[0])}','${JSON.stringify(product.imgDimensions[1])}','${JSON.stringify(product.imgDimensions[2])}']::json[]);`

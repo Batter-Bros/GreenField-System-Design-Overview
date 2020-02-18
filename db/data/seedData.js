@@ -9,6 +9,10 @@ function createOneData(n) {
     category: null,
     default_price: null,
     features: [],
+    style: null
+  };
+
+  let styleObj = {
     style_id: null,
     skus: {
       S: null,
@@ -18,11 +22,12 @@ function createOneData(n) {
       XL: null,
       XXL: null
     },
+    photos: [],
     name: null,
     original_price: null,
     sale_price: null,
-    photos: [],
-  };
+
+  }
 
   let featuresObj = {
     feature: null,
@@ -41,8 +46,10 @@ function createOneData(n) {
   dummyData.product_description = faker.lorem.sentence({min:1, max:10})
   dummyData.category = faker.commerce.productAdjective()
   dummyData.default_price = faker.random.number({min: 1, max: 100})
-  dummyData.style_id = n,
-  dummyData.skus = {
+
+
+  styleObj.style_id = n,
+  styleObj.skus = {
     S: faker.random.number({min: 1, max: 100}),
     XS: faker.random.number({min: 1, max: 100}),
     M: faker.random.number({min: 1, max: 100}),
@@ -50,28 +57,29 @@ function createOneData(n) {
     XL: faker.random.number({min: 1, max: 100}),
     XXL: faker.random.number({min: 1, max: 100})
   }
-  dummyData.name = faker.commerce.productName;
-  dummyData.original_price = faker.random.number({min:1, max:1000})
-  dummyData.sale_price = faker.random.number({min:1, max:1000})
+  styleObj.name = faker.commerce.productName;
+  styleObj.original_price = faker.random.number({min:1, max:1000})
+  styleObj.sale_price = faker.random.number({min:1, max:1000})
+
 
   for (let i = 0; i < 10; i++) {
     photoObj.url = `https://images.unsplash.com/photo-${faker.random.number({min:1, max:1000})}`;
     photoObj.thumbnail_url = `https://images.unsplash.com/photo-${faker.random.number({min:1, max:10000})}`;
 
-    dummyData.photos.push(photoObj);
+    styleObj.photos.push(photoObj);
     photoObj = {};
   }
-  // for (let j = 0; j < 5; j++) {
-  //   featuresObj.feautre = faker.commerce.productAdjective();
-  //   featuresObj.value = faker.lorem.word();
+  for (let j = 0; j < 5; j++) {
+    featuresObj.feautre = faker.commerce.productAdjective();
+    featuresObj.value = faker.lorem.word();
 
-  //   dummyData.reviews.push(featuresObj);
-  //   featuresObj = {};
-  //   featuresObj.feature = null;
-  //   featuresObj.value = null;
-  // }
+    dummyData.reviews.push(featuresObj);
+    featuresObj = {};
 
-  return dummyData;
+  }
+  dummyData.style = styleObj
+
+  return styleObj, featureObj, photoObj, dummyData;
 }
 
 function createBulkData(i) {

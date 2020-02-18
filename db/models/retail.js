@@ -26,12 +26,12 @@ var styleSchema = mongoose.Schema({
   original_price: String,
   sale_price: String,
   default: Number,
-  photos: [photosSchema  ],
+  photos: photosSchema  ,
 })
 
 var productSchema = mongoose.Schema({
-  id: Number,
-  product_id: { type: String, unique: true },
+  id: {type: Number, unique: true},
+  name: String,
   slogan: String,
   product_description: String,
   category: String,
@@ -49,7 +49,7 @@ function findAll(callback) {
 
 
 function findOne(id, callback) {
-  ProductModel.find({product_id: id}, callback);
+  ProductModel.find({id: id}, callback);
 }
 
 function insertOne(product, callback) {
@@ -57,7 +57,7 @@ function insertOne(product, callback) {
 }
 
 function findMany(ids, callback) {
-  ProductModel.find({place_id: {$in: ids}}, callback);
+  ProductModel.find({id: {$in: ids}}, callback);
 }
 
 function count(){
