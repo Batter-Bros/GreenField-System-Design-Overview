@@ -69,17 +69,17 @@ function createOneData(n) {
     styleObj.photos.push(photoObj);
     photoObj = {};
   }
-  for (let j = 0; j < 5; j++) {
-    featuresObj.feautre = faker.commerce.productAdjective();
-    featuresObj.value = faker.lorem.word();
+  // for (let j = 0; j < 5; j++) {
+  //   featuresObj.feautre = faker.commerce.productAdjective();
+  //   featuresObj.value = faker.lorem.word();
 
-    dummyData.reviews.push(featuresObj);
-    featuresObj = {};
+  //   dummyData.reviews.push(featuresObj);
+  //   featuresObj = {};
 
-  }
+  // }
   dummyData.style = styleObj
 
-  return styleObj, featureObj, photoObj, dummyData;
+  return styleObj, photoObj, dummyData;
 }
 
 function createBulkData(i) {

@@ -1,0 +1,146 @@
+.q-main {
+  display: flex;
+  flex-wrap: wrap;
+}
+.q-main .text-main {
+  margin-bottom: 0.25rem;
+}
+.q-main .text-sub {
+  margin-left: auto;
+  margin-top: 0.3rem;
+}
+@media (max-width: 600px) {
+  .q-main .text-main {
+    min-width: 100%;
+    flex-basis: 100%;
+  }
+  .q-main .text-sub {
+    margin-left: 0;
+    margin-top: 0;
+  }
+}
+
+.popup-body {
+  height: auto;
+  width: 40%;
+  margin-top: 12.5%;
+  margin-left: 30%;
+  background-color: white;
+  padding: 0.5em;
+}
+.popup-body textarea {
+  width: 100%;
+}
+.popup-body input {
+  width: 50%;
+}
+.popup-body .text-reg {
+  margin-bottom: 0;
+}
+@media (max-width: 600px) {
+  .popup-body {
+    width: 90vw;
+    margin-left: 5vw;
+    margin-top: 0%;
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+  .popup-body input {
+    width: 100%;
+  }
+}
+
+.q-search {
+  width: 100%;
+}
+@media (max-width: 600px) {
+  .q-search {
+    font-size: 0.8rem;
+  }
+}
+
+.selector .selector-main {
+  background-color: white;
+  border-color: black;
+  border-style: solid;
+  text-align: center;
+  border-width: 1px;
+  cursor: pointer;
+}
+.selector .selector-main * {
+  pointer-events: none;
+}
+.selector .selector-main:hover {
+  outline: 1px dotted;
+}
+.selector .options {
+  background-color: white;
+  border-color: black;
+  border-style: solid;
+  text-align: center;
+  border-width: 1px;
+  cursor: pointer;
+  overflow-y: auto;
+  max-height: 32vh;
+  display: block;
+  position: absolute;
+  z-index: 10;
+  width: inherit;
+  padding-left: inherit;
+  padding-right: inherit;
+  left: -0.04rem;
+}
+.selector .item {
+  background-color: white;
+  border-color: black;
+  border-style: solid;
+  text-align: center;
+  border-width: 1px;
+  cursor: pointer;
+  color: inherit;
+}
+.selector .item:hover {
+  color: white;
+  background-color: black;
+}
+
+.product-search {
+  background-color: white;
+  border-color: black;
+  border-style: solid;
+  text-align: center;
+  border-width: 1px;
+  cursor: pointer;
+  cursor: default;
+}
+.product-search input {
+  padding: 1rem 1rem;
+  line-height: 1rem;
+  width: inherit;
+}
+.product-search button {
+  border-style: none;
+  width: inherit;
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.answer br {
+  display: none;
+}
+@media (max-width: 600px) {
+  .answer br {
+    display: block;
+  }
+  .answer .divider-bar {
+    display: none;
+  }
+}
+
+/*# sourceMappingURL=compiled.css.map */

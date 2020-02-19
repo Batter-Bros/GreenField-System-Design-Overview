@@ -75,16 +75,16 @@ function createBulkFeature(j) {
 }
 
 function createBulkProduct(k) {
-  const arrPhoto = [];
+  const arrProduct = [];
 
   for (let init = k; init < k + 1000; init++) {
-    arrPhoto.push(createObjProduct(init));
+    arrProduct.push(createObjProduct(init));
   }
 
   if (k % 100000 === 0) {
     console.log('photo', k);
   }
-  return arrPhoto;
+  return arrProduct;
 }
 
 module.exports.createBulkPhoto = createBulkPhoto;

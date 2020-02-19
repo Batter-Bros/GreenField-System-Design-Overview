@@ -1,12 +1,12 @@
 FROM node:latest
 
-RUN mkdir -p /src/app
+RUN mkdir -p /client/src/app
 
-WORKDIR /src/app
+WORKDIR /client/src/app
 
 COPY package*.json ./
 
-COPY . /src/app
+COPY . /client/src/app
 
 RUN npm install
 
