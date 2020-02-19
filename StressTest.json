@@ -1,0 +1,104 @@
+{
+  "config": {
+    "target": "http://localhost:3001",
+    "phases": [
+      {
+        "duration": 60,
+        "arrivalRate": 1,
+        "name": "initialize"
+      },
+      {
+        "duration": 10,
+        "arrivalRate": 1,
+        "rampTo": 100,
+        "name": "ramp to 100"
+      },
+      {
+        "duration": 10,
+        "arrivalRate": 100,
+        "rampTo": 200,
+        "name": "ramp to 200"
+      },
+      {
+        "duration": 10,
+        "arrivalRate": 200,
+        "rampTo": 300,
+        "name": "ramp to 300"
+      },
+      {
+        "duration": 10,
+        "arrivalRate": 300,
+        "rampTo": 400,
+        "name": "ramp to 400"
+      },
+      {
+        "duration": 10,
+        "arrivalRate": 400,
+        "rampTo":500,
+        "name": "ramp to 500"
+      },
+      {
+        "duration": 10,
+        "arrivalRate": 500,
+        "rampTo": 600,
+        "name": "ramp to 600"
+      },
+      {
+        "duration": 10,
+        "arrivalRate": 600,
+        "rampTo": 700,
+        "name": "ramp to 700"
+      },
+      {
+        "duration": 10,
+        "arrivalRate": 700,
+        "rampTo": 800,
+        "name": "ramp to 800"
+      },
+      {
+        "duration": 10,
+        "arrivalRate": 800,
+        "rampTo": 900,
+        "name": "ramp to 900"
+      },
+      {
+        "duration": 10,
+        "arrivalRate": 900,
+        "rampTo": 1000,
+        "name": "maximize"
+      },
+      {
+        "duration": 60,
+        "arrivalRate": 1000,
+        "name": "maintain"
+      },
+      {
+        "duration": 60,
+        "arrivalRate": 1000,
+        "rampTo": 1,
+        "name": "ramp down"
+      }
+    ],
+    "defaults": {
+      "headers": {
+        "x-my-service-auth": ""
+      }
+    }
+  },
+  "scenarios": [
+    {
+      "flow": [
+        {
+          "loop": [
+            {
+              "get": {
+                "url": "/products/{{$randomNumber(9000000, 10000000)}}"
+              }
+            }
+          ],
+          "count": 100
+        }
+      ]
+    }
+  ]
+}

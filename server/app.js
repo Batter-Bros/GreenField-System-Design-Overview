@@ -4,7 +4,7 @@ const app = express();
 const cors = require('cors');
 const path = require('path');
 const bodyParser = require('body-parser');
-const db = require('../db/getProducts.js');
+const db = require('../db/index.js');
 
 
 app.use(compression());
