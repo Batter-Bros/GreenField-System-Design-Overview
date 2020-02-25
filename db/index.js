@@ -1,6 +1,6 @@
 const MongoClient = require('mongodb').MongoClient;
 const mongoose = require('mongoose');
-const conn = require('./dbcon.js');
+// const conn = require('./dbcon.js');
 const path = require('path');
 const fs = require('fs');
 const uri = 'mongodb://localhost:27017';
